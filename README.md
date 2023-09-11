@@ -1,2 +1,2 @@
 # tkFictionalCalendar
-Fictional calendar component for tkinter
+Fictionnal calendar component for tkinter
