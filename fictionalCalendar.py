@@ -1,6 +1,10 @@
 import tkinter as tk
 from tkinter import PhotoImage
 from PIL import Image, ImageTk
+import os
+
+print(os.getcwd())
+
 
 class Calendar(tk.Frame):
     def __init__(self, master, title, subtitle):
@@ -19,6 +23,11 @@ class Calendar(tk.Frame):
         num_rows = rows  # Nombre de lignes
         num_cols = col  # Nombre de colonnes
         current_num = 1
+        
+        icon_image = Image.open("icon.png")
+        icon_photo = ImageTk.PhotoImage(icon_image)
+        
+        button_with_icon = [3,16]
 
         for row in range(num_rows):
             row_frame = tk.Frame(self)
@@ -26,6 +35,11 @@ class Calendar(tk.Frame):
 
             for col in range(num_cols):
                 button = tk.Button(row_frame, text=str(current_num), width=9, height=4)
+                
+                if current_num in button_with_icon:
+                    button.config(image=icon_photo, compound="top")  # Vous pouvez également utiliser "left", "right", ou "bottom"
+                    button.image = icon_photo  # Garder une référence à l'image
+
                 button.pack(side=tk.LEFT, padx=3, pady=3)
                 current_num += 1
                 
