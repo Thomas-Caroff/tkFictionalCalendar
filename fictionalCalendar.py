@@ -7,11 +7,26 @@ class Calendar(tk.Frame):
         self.title = title
         self.subtitle = subtitle
         self.info_editor = info_editor
+        self.button_dict = {}
         self.create_widgets()
 
     def create_widgets(self):
-        tk.Label(self, text=self.title, font=("Helvetica", 12)).pack()
-        tk.Label(self, text=self.subtitle, font=("Helvetica", 12)).pack()
+        # Frame pour les boutons "→" et "←" à gauche et à droite du titre
+        title_frame = tk.Frame(self)
+        title_frame.pack(fill=tk.X)
+        
+        tk.Button(title_frame, text="←", command=lambda: self.on_direction_click("left")).pack(side=tk.LEFT, expand=True)
+        tk.Label(title_frame, text=self.title, font=("Helvetica", 12), anchor="center").pack(side=tk.LEFT, fill=tk.X)
+        tk.Button(title_frame, text="→", command=lambda: self.on_direction_click("right")).pack(side=tk.LEFT, expand=True)
+        
+        # Frame pour les boutons "→" et "←" à gauche et à droite du sous-titre
+        subtitle_frame = tk.Frame(self)
+        subtitle_frame.pack(fill=tk.X)
+        
+        tk.Button(subtitle_frame, text="←", command=lambda: self.on_direction_click("left")).pack(side=tk.LEFT, expand=True)
+        tk.Label(subtitle_frame, text=self.subtitle, font=("Helvetica", 12), anchor="center").pack(side=tk.LEFT, fill=tk.X)
+        tk.Button(subtitle_frame, text="→", command=lambda: self.on_direction_click("right")).pack(side=tk.LEFT, expand=True)
+        
         self.create_button_grid()
 
     def create_button_grid(self, rows=4, cols=5, max_days=18):
@@ -31,9 +46,31 @@ class Calendar(tk.Frame):
                 
                 if (max_days != 0) and current_num > max_days:
                     break
+                
+                self.add_button_to_dict(button, current_num)
+
+    def add_button_to_dict(self, button, current_num):
+        title_key = self.title
+        subtitle_key = self.subtitle
+        num_key = current_num
+        
+        if title_key not in self.button_dict:
+            self.button_dict[title_key] = {}
+        if subtitle_key not in self.button_dict[title_key]:
+            self.button_dict[title_key][subtitle_key] = {}
+        self.button_dict[title_key][subtitle_key][num_key] = button
 
     def on_button_click(self, button_num):
         self.info_editor.update_info(button_num)
+
+    def on_direction_click(self, direction):
+        # Réagir aux clics sur les boutons de direction
+        if direction == "left":
+            # Déplacer le texte vers la gauche (implémentez votre logique ici)
+            pass
+        elif direction == "right":
+            # Déplacer le texte vers la droite (implémentez votre logique ici)
+            pass
 
 class InfoEditor(tk.Frame):
     def __init__(self, master):
