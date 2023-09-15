@@ -1,6 +1,4 @@
 import tkinter as tk
-from tkinter import PhotoImage
-from PIL import Image, ImageTk
 
 class Calendar(tk.Frame):
     def __init__(self, master, title, subtitle):
